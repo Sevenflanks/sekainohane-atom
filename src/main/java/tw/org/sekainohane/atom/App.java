@@ -1,6 +1,9 @@
 package tw.org.sekainohane.atom;
 
 import java.util.Map;
+import java.util.Scanner;
+
+import com.google.common.primitives.Ints;
 
 import tw.org.sekainohane.atom.maze.enums.AreaType;
 import tw.org.sekainohane.atom.maze.model.Maze;
@@ -14,35 +17,97 @@ import tw.org.sekainohane.atom.maze.service.impl.RegularMazeBuilder;
  */
 public class App {
 	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
 		
-		Map<AreaType, Integer> rates = new RateBuilderBySetter()
-			.setRate(AreaType.ROAD_1, 3)
-			.setRate(AreaType.ROAD_2, 2)
-			.setRate(AreaType.ROAD_3, 1)
-			.setRate(AreaType.ROAD_4, 2)
-			.setRate(AreaType.ROAD_5, 1)
-			.setRate(AreaType.ROAD_6, 1)
-			.setRate(AreaType.ROAD_7, 3)
-			.setRate(AreaType.ROAD_8, 2)
-			.setRate(AreaType.ROAD_9, 1)
+		System.out.println("===================");
+		System.out.println("Welcome Maze drawer");
+		System.out.println("===================");
+		System.out.println("");
+		System.out.println("Please enter the following properties");
+		System.out.println("[Map Width]: Number >= 1");
+		int width = waitForKeyInInt(scan);
+		System.out.println("[Map Length]: Number >= 1");
+		int length = waitForKeyInInt(scan);
+		System.out.println("[StartPoint X]: Number >= 0");
+		int startX = waitForKeyInInt(scan);
+		System.out.println("[StartPoint Y]: Number >= 0");
+		int startY = waitForKeyInInt(scan);
+		System.out.println("[Rate]: Use default rate");
+		boolean useDefaultRate = waitForKeyInYN(scan);
+		
+		Map<AreaType, Integer> rates = null;
+		if (useDefaultRate) {
+			rates = new RateBuilderBySetter()
+			.setRate(AreaType.ROAD_1, 5)
+			.setRate(AreaType.ROAD_2, 5)
+			.setRate(AreaType.ROAD_3, 5)
+			.setRate(AreaType.ROAD_4, 5)
+			.setRate(AreaType.ROAD_5, 2)
+			.setRate(AreaType.ROAD_6, 5)
+			.setRate(AreaType.ROAD_7, 5)
+			.setRate(AreaType.ROAD_8, 5)
+			.setRate(AreaType.ROAD_9, 5)
 			
-			.setRate(AreaType.ROAD_H, 2)
-			.setRate(AreaType.ROAD_V, 10)
+			.setRate(AreaType.ROAD_H, 15)
+			.setRate(AreaType.ROAD_V, 15)
 			
-			.setRate(AreaType.WALL_2, 1)
-			.setRate(AreaType.WALL_4, 1)
-			.setRate(AreaType.WALL_6, 1)
-			.setRate(AreaType.WALL_8, 1)
+			.setRate(AreaType.WALL_2, 2)
+			.setRate(AreaType.WALL_4, 2)
+			.setRate(AreaType.WALL_6, 2)
+			.setRate(AreaType.WALL_8, 2)
 			
-			.setRate(AreaType.WALL_H, 0)
-			.setRate(AreaType.WALL_V, 0)
+			.setRate(AreaType.WALL_H, 1)
+			.setRate(AreaType.WALL_V, 1)
 			
 			.setRate(AreaType.ROOM_NORMAL_1, 1)
 			
 			.build();
+		} else {
+			RateBuilderBySetter rateBuilder = new RateBuilderBySetter();
+			AreaType.toList().stream()
+				.filter(at -> !at.equals(AreaType.ROOM_START) || !at.equals(AreaType.ROOM_EMPTY))
+				.forEach(at -> {
+					System.out.println("[Rate]-[" + at.getSymbol() + "]: number");
+					rateBuilder.setRate(at, waitForKeyInInt(scan));
+				});
+			rates = rateBuilder.build();
+		}
+		
+		System.out.println("[Builder]: All setting has done, press enter to start...");
+		scan.hasNextLine();
+		scan.close();
 		
 		MazeBuilder MazeBuilder = new RegularMazeBuilder();
-		Maze maze = MazeBuilder.setSurface(40, 5).setStart(0, 2).setAreaTypeRates(rates).build();
+		Maze maze = MazeBuilder.setSurface(width, length).setStart(startX, startY).setAreaTypeRates(rates).build();
 		maze.draw();
 	}
+	
+	private static int waitForKeyInInt(Scanner scan) {
+		int result = -999;
+		while (scan.hasNextLine()) {
+			try {
+				result = Ints.tryParse(scan.nextLine());
+			} catch (Exception e) {
+				System.out.println("Must key in a Number");
+			}
+			if (result != -999) {
+				break;
+			}
+		}
+		return result;
+	}
+	
+	private static boolean waitForKeyInYN(Scanner scan) {
+		String result = null;
+		while (scan.hasNextLine()) {
+			result = scan.nextLine();
+			if (!result.toUpperCase().equals("Y") && !result.toUpperCase().equals("N")) {
+				System.out.println("Must key in a Y/N");
+			} else {
+				break;
+			}
+		}
+		return result.toUpperCase().equals("Y");
+	}
+	
 }

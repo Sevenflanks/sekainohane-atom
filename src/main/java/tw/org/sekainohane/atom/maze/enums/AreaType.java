@@ -1,5 +1,8 @@
 package tw.org.sekainohane.atom.maze.enums;
 
+import java.util.Arrays;
+import java.util.List;
+
 import lombok.Getter;
 
 @Getter
@@ -49,6 +52,10 @@ public enum AreaType {
 	@Override
 	public String toString() {
 		return this.symbol;
+	}
+	
+	public static List<AreaType> toList() {
+		return Arrays.asList(AreaType.values());
 	}
 
 	

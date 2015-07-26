@@ -6,7 +6,7 @@ import tw.org.sekainohane.atom.maze.model.Area;
 import tw.org.sekainohane.atom.maze.model.Maze;
 import tw.org.sekainohane.atom.maze.model.Position;
 import tw.org.sekainohane.atom.maze.service.AreaBuilder;
-import tw.org.sekainohane.common.logger.Log;
+import tw.org.sekainohane.common.progresser.Progress;
 
 public class AreasGenerator {
 	
@@ -21,6 +21,8 @@ public class AreasGenerator {
 		
 		Optional<Position> nextBuild = positionSupplier.get();
 		
+		Progress progress = new Progress(maze.getWidth() * maze.getLength());
+		
 		while (nextBuild.isPresent()) {
 			Position currentBuild = nextBuild.get();
 			
@@ -28,12 +30,15 @@ public class AreasGenerator {
 			
 			Area currentArea = areaBuilder.build();
 			
-			Log.info("AreaBulding: {}", currentArea);
+//			Log.info("AreaBulding: {}", currentArea);
+			progress.treated(1);
 			
 			maze.getAreas().add(currentArea);
 			
 			nextBuild = positionSupplier.get();
 		}
+		progress.done();
+		System.out.println("\n");
 	}
 	
 }

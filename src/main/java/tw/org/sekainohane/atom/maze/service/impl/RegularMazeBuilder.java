@@ -1,8 +1,10 @@
 package tw.org.sekainohane.atom.maze.service.impl;
 
 import java.util.Map;
+import java.util.Objects;
 
 import tw.org.sekainohane.atom.maze.enums.AreaType;
+import tw.org.sekainohane.atom.maze.exception.MazeBuildException;
 import tw.org.sekainohane.atom.maze.model.Area;
 import tw.org.sekainohane.atom.maze.model.Maze;
 import tw.org.sekainohane.atom.maze.model.Position;
@@ -33,10 +35,26 @@ public class RegularMazeBuilder implements MazeBuilder {
 
 	@Override
 	public Maze build() {
+		check();
 		setStaticPosition();
 		AreasGenerator areasGenerator = new AreasGenerator(maze);
 		areasGenerator.creatAreasIntoMaze();
 		return maze;
+	}
+	
+	private void check() {
+		if (maze.getWidth() <= 0) {
+			throw new MazeBuildException("Width must > 0");
+		}
+		if (maze.getLength() <= 0) {
+			throw new MazeBuildException("Length must > 0");
+		}
+		if (Objects.isNull(maze.getStart())) {
+			throw new MazeBuildException("Start position is require");
+		}
+		if (Objects.isNull(maze.getRates())) {
+			throw new MazeBuildException("Rate position is require");
+		}
 	}
 	
 	private void setStaticPosition() {
