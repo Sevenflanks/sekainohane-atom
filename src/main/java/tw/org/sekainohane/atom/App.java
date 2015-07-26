@@ -23,7 +23,16 @@ public class App {
 		System.out.println("Welcome Maze drawer");
 		System.out.println("===================");
 		System.out.println("");
-		System.out.println("Please enter the following properties");
+		System.out.println("　　　　┌───────────────────────────────┐╮");
+		System.out.println("　　　　│　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　││");
+		System.out.println("　　　　│　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　││");
+		System.out.println("　　　　│　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　│Length");
+		System.out.println("　　　　│　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　││");
+		System.out.println("　　　　│　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　││");
+		System.out.println("　　　↗└───────────────────────────────┘╯");
+		System.out.println("(0.0) 　╰───────────────Width─────────────╯");
+		System.out.println("");
+		System.out.println("Please enter the following settings");
 		System.out.println("[Map Width]: Number >= 1");
 		int width = waitForKeyInInt(scan);
 		System.out.println("[Map Length]: Number >= 1");
