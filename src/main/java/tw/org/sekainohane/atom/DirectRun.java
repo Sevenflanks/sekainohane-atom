@@ -20,25 +20,29 @@ public class DirectRun {
 				.setRate(AreaType.ROAD_7, 5)
 				.setRate(AreaType.ROAD_8, 5)
 				.setRate(AreaType.ROAD_9, 5)
-
+				
 				.setRate(AreaType.ROAD_H, 15)
 				.setRate(AreaType.ROAD_V, 15)
-
+				
 				.setRate(AreaType.WALL_2, 2)
 				.setRate(AreaType.WALL_4, 2)
 				.setRate(AreaType.WALL_6, 2)
 				.setRate(AreaType.WALL_8, 2)
-
-				.setRate(AreaType.WALL_H, 1)
-				.setRate(AreaType.WALL_V, 1)
-
+				
+				.setRate(AreaType.WALL_H, 0)
+				.setRate(AreaType.WALL_V, 0)
+				
 				.setRate(AreaType.ROOM_NORMAL_1, 1)
 
 				.build();
 
-		MazeBuilder MazeBuilder = new RegularMazeBuilder();
-		Maze maze = MazeBuilder.setSurface(50, 50).setStart(25, 25)
-				.setAreaTypeRates(rates).build();
+		MazeBuilder mazeBuilder = new RegularMazeBuilder();
+		Maze maze = mazeBuilder
+				.setSurface(100, 15)
+				.setStart(0, 7)
+				.setGoal(99, 7)
+				.setAreaTypeRates(rates)
+				.build();
 		maze.draw();
 	}
 }

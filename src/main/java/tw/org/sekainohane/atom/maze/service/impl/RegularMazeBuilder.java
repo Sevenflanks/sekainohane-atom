@@ -26,6 +26,12 @@ public class RegularMazeBuilder implements MazeBuilder {
 		maze.setStart(Position.pos(x, y));
 		return this;
 	}
+	
+	@Override
+	public MazeBuilder setGoal(int x, int y) {
+		maze.setGoal(Position.pos(x, y));
+		return this;
+	}
 
 	@Override
 	public MazeBuilder setAreaTypeRates(Map<AreaType, Integer> rates) {
@@ -59,6 +65,9 @@ public class RegularMazeBuilder implements MazeBuilder {
 	
 	private void setStaticPosition() {
 		maze.getAreas().add(new Area(AreaType.ROOM_START, maze.getStart()));
+		if (Objects.nonNull(maze.getGoal())) {
+			maze.getAreas().add(new Area(AreaType.ROOM_GOAL, maze.getGoal()));
+		}
 	}
 
 }

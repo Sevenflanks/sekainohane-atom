@@ -28,10 +28,22 @@ public class App {
 		int width = waitForKeyInInt(scan);
 		System.out.println("[Map Length]: Number >= 1");
 		int length = waitForKeyInInt(scan);
-		System.out.println("[StartPoint X]: Number >= 0");
+		
+		System.out.println("[StartPoint X]: Number >= 0 & < Width");
 		int startX = waitForKeyInInt(scan);
-		System.out.println("[StartPoint Y]: Number >= 0");
+		System.out.println("[StartPoint Y]: Number >= 0 & < Length");
 		int startY = waitForKeyInInt(scan);
+		
+		System.out.println("[GoalPoint]: Has a goal?");
+		boolean hasGoal = waitForKeyInYN(scan);
+		int goalX = 0, goalY = 0;
+		if (hasGoal) {
+			System.out.println("[GoalPoint X]: Number >= 0 & < Width");
+			goalX = waitForKeyInInt(scan);
+			System.out.println("[GoalPoint Y]: Number >= 0 & < Length");
+			goalY = waitForKeyInInt(scan);
+		}
+		
 		System.out.println("[Rate]: Use default rate");
 		boolean useDefaultRate = waitForKeyInYN(scan);
 		
@@ -65,7 +77,7 @@ public class App {
 		} else {
 			RateBuilderBySetter rateBuilder = new RateBuilderBySetter();
 			AreaType.toList().stream()
-				.filter(at -> !at.equals(AreaType.ROOM_START) || !at.equals(AreaType.ROOM_EMPTY))
+				.filter(at -> !at.equals(AreaType.ROOM_START) || !at.equals(AreaType.ROOM_EMPTY) || !at.equals(AreaType.ROOM_GOAL))
 				.forEach(at -> {
 					System.out.println("[Rate]-[" + at.getSymbol() + "]: number");
 					rateBuilder.setRate(at, waitForKeyInInt(scan));
@@ -77,8 +89,12 @@ public class App {
 		scan.hasNextLine();
 		scan.close();
 		
-		MazeBuilder MazeBuilder = new RegularMazeBuilder();
-		Maze maze = MazeBuilder.setSurface(width, length).setStart(startX, startY).setAreaTypeRates(rates).build();
+		MazeBuilder mazeBuilder = new RegularMazeBuilder();
+		mazeBuilder.setSurface(width, length).setStart(startX, startY).setAreaTypeRates(rates);
+		if (hasGoal) {
+			mazeBuilder.setGoal(goalX, goalY);
+		}
+		Maze maze = mazeBuilder.build();
 		maze.draw();
 	}
 	

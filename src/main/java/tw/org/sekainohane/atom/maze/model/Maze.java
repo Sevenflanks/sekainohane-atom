@@ -31,6 +31,9 @@ public class Maze {
 	private Position start; // 起始點
 	
 	@Setter
+	private Position goal; // 終點點
+	
+	@Setter
 	private Map<AreaType, Integer> rates; // 圖塊產生權重
 	
 	public Optional<Area> getArea(int x, int y) {

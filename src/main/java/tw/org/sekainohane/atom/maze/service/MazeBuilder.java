@@ -11,7 +11,10 @@ public interface MazeBuilder {
 	
 	public MazeBuilder setStart(int x, int y);
 	
+	public MazeBuilder setGoal(int x, int y);
+	
 	public MazeBuilder setAreaTypeRates(Map<AreaType, Integer> rates);
 	
 	public Maze build();
+
 }

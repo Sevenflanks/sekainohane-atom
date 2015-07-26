@@ -33,5 +33,6 @@ public class Progress {
 			System.out.print("|");
 		}
 		System.out.println();
+		Log.info("Process done.");
 	}
 }
