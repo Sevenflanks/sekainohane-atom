@@ -1,4 +1,4 @@
-package tw.org.sekainohane.atom.maze.service.impl;
+package tw.org.sekainohane.atom.maze.facade;
 
 import java.util.Optional;
 
@@ -6,6 +6,8 @@ import tw.org.sekainohane.atom.maze.model.Area;
 import tw.org.sekainohane.atom.maze.model.Maze;
 import tw.org.sekainohane.atom.maze.model.Position;
 import tw.org.sekainohane.atom.maze.service.AreaBuilder;
+import tw.org.sekainohane.atom.maze.service.impl.DymanicBuildPositionSupplier;
+import tw.org.sekainohane.atom.maze.service.impl.RegularAreaBuilder;
 import tw.org.sekainohane.common.progresser.Progress;
 
 public class AreasGenerator {
