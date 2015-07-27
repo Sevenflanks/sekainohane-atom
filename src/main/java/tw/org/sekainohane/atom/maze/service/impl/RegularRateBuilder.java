@@ -8,12 +8,12 @@ import tw.org.sekainohane.atom.maze.service.RateBuilder;
 
 import com.google.common.collect.Maps;
 
-public class RateBuilderBySetter implements RateBuilder {
+public class RegularRateBuilder implements RateBuilder {
 	
 	private Map<AreaType, Integer> rates = Maps.newEnumMap(AreaType.class);
 	
 	@Override
-	public RateBuilderBySetter setRate(AreaType areaType, int rate) {
+	public RegularRateBuilder setRate(AreaType areaType, int rate) {
 		if (rate < 0) {
 			rate = 0;
 		}

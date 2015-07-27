@@ -5,12 +5,12 @@ import java.util.Map;
 import tw.org.sekainohane.atom.maze.enums.AreaType;
 import tw.org.sekainohane.atom.maze.model.Maze;
 import tw.org.sekainohane.atom.maze.service.MazeBuilder;
-import tw.org.sekainohane.atom.maze.service.impl.RateBuilderBySetter;
+import tw.org.sekainohane.atom.maze.service.impl.RegularRateBuilder;
 import tw.org.sekainohane.atom.maze.service.impl.RegularMazeBuilder;
 
 public class DirectRun {
 	public static void main(String[] args) {
-		Map<AreaType, Integer> rates = new RateBuilderBySetter()
+		Map<AreaType, Integer> rates = new RegularRateBuilder()
 				.setRate(AreaType.ROAD_1, 5)
 				.setRate(AreaType.ROAD_2, 5)
 				.setRate(AreaType.ROAD_3, 5)
