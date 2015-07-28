@@ -86,9 +86,9 @@ public class App {
 		} else {
 			RateBuilderBySetter rateBuilder = new RateBuilderBySetter();
 			AreaType.toList().stream()
-				.filter(at -> !at.equals(AreaType.ROOM_START) || !at.equals(AreaType.ROOM_EMPTY) || !at.equals(AreaType.ROOM_GOAL))
+				.filter(at -> !at.equals(AreaType.ROOM_START) && !at.equals(AreaType.ROOM_EMPTY) && !at.equals(AreaType.ROOM_GOAL))
 				.forEach(at -> {
-					System.out.println("[Rate]-[" + at.getSymbol() + "]: number");
+					System.out.println("[Rate]-[" + at + " - " + at.getSymbol() + "]: number");
 					rateBuilder.setRate(at, waitForKeyInInt(scan));
 				});
 			rates = rateBuilder.build();

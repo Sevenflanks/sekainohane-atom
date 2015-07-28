@@ -102,7 +102,7 @@ public class Maze {
 				if (area.isPresent()) {
 					sb.append(area.get().getType().getSymbol());
 				} else {
-					sb.append(AreaType.ROOM_EMPTY);
+					sb.append(AreaType.ROOM_EMPTY.getSymbol());
 				}
 			}
 			sb.append("\n");

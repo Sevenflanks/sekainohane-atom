@@ -52,11 +52,6 @@ public enum AreaType {
 		this.eastCanGo = eastCanGo;
 	}
 
-	@Override
-	public String toString() {
-		return this.symbol;
-	}
-	
 	public static List<AreaType> toList() {
 		return Arrays.asList(AreaType.values());
 	}
