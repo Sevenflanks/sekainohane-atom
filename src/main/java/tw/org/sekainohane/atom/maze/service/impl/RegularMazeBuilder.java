@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import tw.org.sekainohane.atom.maze.enums.AreaType;
 import tw.org.sekainohane.atom.maze.exception.MazeBuildException;
+import tw.org.sekainohane.atom.maze.facade.AreasGenerator;
 import tw.org.sekainohane.atom.maze.model.Area;
 import tw.org.sekainohane.atom.maze.model.Maze;
 import tw.org.sekainohane.atom.maze.model.Position;

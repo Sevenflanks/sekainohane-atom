@@ -7,12 +7,12 @@ import lombok.Getter;
 
 @Getter
 public enum AreaType {
-//	ROOM_EMPTY(" ", false, false, false, false), // for ecipse console
-	ROOM_EMPTY("　", false, false, false, false), // for win console
+	ROOM_EMPTY(" ", false, false, false, false), // for ecipse console
+//	ROOM_EMPTY("　", false, false, false, false), // for win console
 	ROOM_START("█", true, true, true, true),
 	ROOM_GOAL("█", true, true, true, true),
-//	ROOM_NORMAL_1("▒", false, false, true, true), // for ecipse console
-	ROOM_NORMAL_1("□", false, false, true, true), // for win console
+	ROOM_NORMAL_1("▒", false, false, true, true), // for ecipse console
+//	ROOM_NORMAL_1("□", false, false, true, true), // for win console
 	
 	ROAD_H("═", false, false, true, true),
 	ROAD_V("║", true, true, false, false),
