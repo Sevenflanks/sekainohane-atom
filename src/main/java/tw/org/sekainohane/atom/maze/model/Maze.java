@@ -44,6 +44,10 @@ public class Maze {
 		return areas.parallelStream().filter(a -> a.getPos().equals(pos)).findFirst();
 	}
 	
+	public boolean isAreaPresent(Position pos) {
+		return areas.parallelStream().anyMatch(a -> a.getPos().equals(pos));
+	}
+	
 	public List<Area> getAroundAreas(int x, int y) {
 		return getAroundAreas(Position.pos(x, y));
 	}
@@ -61,7 +65,7 @@ public class Maze {
 	public List<Position> getAroundBlankPosition(Position pos) {
 		List<Position> aroundPositions = 
 				Lists.newArrayList(Position.north(pos), Position.south(pos), Position.west(pos), Position.east(pos));
-		return aroundPositions.parallelStream().filter(p -> !getArea(p).isPresent()).collect(Collectors.toList());
+		return aroundPositions.stream().filter(p -> !isAreaPresent(p)).collect(Collectors.toList());
 	}
 	
 	/**
@@ -69,14 +73,18 @@ public class Maze {
 	 */
 	public List<Position> getAroundBlankAndCanGoPosition(Area area) {
 		return getAroundBlankPosition(area.getPos()).stream().filter(p -> {
-			if (p.isAtNorth(area.getPos())) {
-				return area.getType().isNorthCanGo();
-			} else if (p.isAtSouth(area.getPos())) {
-				return area.getType().isSouthCanGo();
-			} else if (p.isAtWest(area.getPos())) {
-				return area.getType().isWestCanGo();
-			} else if (p.isAtEast(area.getPos())) {
-				return area.getType().isEastCanGo();
+			if (isPosAtMaze(p)) {
+				if (p.isAtNorth(area.getPos())) {
+					return area.getType().isNorthCanGo();
+				} else if (p.isAtSouth(area.getPos())) {
+					return area.getType().isSouthCanGo();
+				} else if (p.isAtWest(area.getPos())) {
+					return area.getType().isWestCanGo();
+				} else if (p.isAtEast(area.getPos())) {
+					return area.getType().isEastCanGo();
+				} else {
+					return false; 
+				}
 			} else {
 				return false; 
 			}

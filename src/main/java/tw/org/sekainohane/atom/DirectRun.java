@@ -21,13 +21,13 @@ public class DirectRun {
 				.setRate(AreaType.ROAD_8, 5)
 				.setRate(AreaType.ROAD_9, 5)
 				
-				.setRate(AreaType.ROAD_H, 15)
+				.setRate(AreaType.ROAD_H, 30)
 				.setRate(AreaType.ROAD_V, 15)
 				
-				.setRate(AreaType.WALL_2, 2)
-				.setRate(AreaType.WALL_4, 2)
-				.setRate(AreaType.WALL_6, 2)
-				.setRate(AreaType.WALL_8, 2)
+				.setRate(AreaType.WALL_2, 1)
+				.setRate(AreaType.WALL_4, 1)
+				.setRate(AreaType.WALL_6, 1)
+				.setRate(AreaType.WALL_8, 1)
 				
 				.setRate(AreaType.WALL_H, 0)
 				.setRate(AreaType.WALL_V, 0)

@@ -19,10 +19,9 @@ public class DymanicBuildPositionSupplier implements Supplier<Optional<Position>
 	@Override
 	public Optional<Position> get() {
 		return maze.getAreas().parallelStream()
-			.map(a -> maze.getAroundBlankAndCanGoPosition(a))
-			.flatMap(List::stream)
-			.filter(p -> maze.isPosAtMaze(p))
-			.findFirst();
+				.map(a -> maze.getAroundBlankAndCanGoPosition(a))
+				.flatMap(List::stream)
+				.findAny();
 	}
 
 }
