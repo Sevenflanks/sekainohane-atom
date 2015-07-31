@@ -83,5 +83,33 @@
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- slick2D -->
+		<dependency>
+			<groupId>org.slick2d</groupId>
+			<artifactId>slick2d-core</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slick2d</groupId>
+			<artifactId>slick2d-hiero</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slick2d</groupId>
+			<artifactId>slick2d-peditor</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slick2d</groupId>
+			<artifactId>slick2d-scalar</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slick2d</groupId>
+			<artifactId>slick2d-packulike</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+
 	</dependencies>
 </project>
