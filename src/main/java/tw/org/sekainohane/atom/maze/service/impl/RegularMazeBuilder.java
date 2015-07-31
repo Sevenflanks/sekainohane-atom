@@ -18,7 +18,7 @@ public class RegularMazeBuilder implements MazeBuilder {
 	@Override
 	public MazeBuilder setSurface(int width, int length) {
 		maze.setWidth(width);
-		maze.setLength(length);
+		maze.setLenght(length);
 		return this;
 	}
 
@@ -53,7 +53,7 @@ public class RegularMazeBuilder implements MazeBuilder {
 		if (maze.getWidth() <= 0) {
 			throw new MazeBuildException("Width must > 0");
 		}
-		if (maze.getLength() <= 0) {
+		if (maze.getLenght() <= 0) {
 			throw new MazeBuildException("Length must > 0");
 		}
 		if (Objects.isNull(maze.getStart())) {

@@ -25,7 +25,7 @@ public class Maze {
 	private int width; // x向長度
 	
 	@Setter
-	private int length; // y向長度
+	private int lenght; // y向長度
 	
 	@Setter
 	private Position start; // 起始點
@@ -95,7 +95,7 @@ public class Maze {
 	 * 座標是否在迷宮設定的範圍內
 	 */
 	public boolean isPosAtMaze(Position pos) {
-		return pos.getX() >= 0 && pos.getY() >= 0 && pos.getX() < width && pos.getY() < length;
+		return pos.getX() >= 0 && pos.getY() >= 0 && pos.getX() < width && pos.getY() < lenght;
 	}
 	
 	/**
@@ -104,7 +104,7 @@ public class Maze {
 	public String getMapBySymbol() {
 		StringBuilder sb = new StringBuilder();
 		
-		for (int y = length - 1; y >= 0; y--) {
+		for (int y = lenght - 1; y >= 0; y--) {
 			for (int x = 0; x < width; x++) {
 				Optional<Area> area = getArea(x, y);
 				if (area.isPresent()) {

@@ -13,26 +13,29 @@ import tw.org.sekainohane.common.progresser.Progress;
 public class AreasGenerator {
 	
 	private final Maze maze;
+	private final DymanicBuildPositionSupplier positionSupplier;
+	private final AreaBuilder areaBuilder;
 	
 	public AreasGenerator(final Maze maze) {
 		this.maze = maze;
+		this.positionSupplier = new DymanicBuildPositionSupplier(maze);
+		this.areaBuilder = new RegularAreaBuilder(maze);
 	}
 	
 	public void creatAreasIntoMaze() {
-		DymanicBuildPositionSupplier positionSupplier = new DymanicBuildPositionSupplier(maze);
+		
 		
 		Optional<Position> nextBuild = positionSupplier.get();
 		
-		Progress progress = new Progress(maze.getWidth() * maze.getLength());
+		Progress progress = new Progress(maze.getWidth() * maze.getLenght());
 		
 		while (nextBuild.isPresent()) {
 			Position currentBuild = nextBuild.get();
 			
-			AreaBuilder areaBuilder = new RegularAreaBuilder(maze, currentBuild);
+			areaBuilder.setBuildPosition(currentBuild);
 			
 			Area currentArea = areaBuilder.build();
 			
-//			Log.info("AreaBulding: {}", currentArea);
 			progress.treated(1);
 			
 			maze.getAreas().add(currentArea);

@@ -12,7 +12,6 @@ import tw.org.sekainohane.atom.walker.states.DummyState;
 
 public class GameStarter extends StateBasedGame {
 
-
 	public GameStarter(String name) {
 		super(name);
 	}

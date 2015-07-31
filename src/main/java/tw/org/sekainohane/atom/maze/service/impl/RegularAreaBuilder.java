@@ -17,11 +17,16 @@ public class RegularAreaBuilder implements AreaBuilder {
 
 	private final Maze maze;
 	
-	private final Position build;
+	private Position build;
 	
-	public RegularAreaBuilder(final Maze maze, final Position build) {
+	public RegularAreaBuilder(final Maze maze) {
 		this.maze = Objects.requireNonNull(maze);
-		this.build = Objects.requireNonNull(build);
+	}
+	
+	@Override
+	public RegularAreaBuilder setBuildPosition(final Position build) {
+		this.build = build;
+		return this;
 	}
 	
 	@Override
