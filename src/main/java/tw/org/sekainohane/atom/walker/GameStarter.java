@@ -5,7 +5,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-import tw.org.sekainohane.atom.walker.states.DummyState;
+import tw.org.sekainohane.atom.walker.states.RegularState;
 
 /**
  * To export runnable jar, first disable System.setProperty("org.lwjgl.librarypath"...
@@ -28,7 +28,7 @@ public class GameStarter extends StateBasedGame {
 
 	@Override
 	public void initStatesList(GameContainer arg0) throws SlickException {
-		this.addState(new DummyState());
+		this.addState(new RegularState());
 	}
 	
 }

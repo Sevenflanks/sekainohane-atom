@@ -33,4 +33,19 @@ public class MazeImgDrawer implements MazeDrawer {
 		graphics.flush();
 	}
 
+	@Override
+	public MazeImgDrawer updatePlayer(int x, int y) {
+		return this;
+	}
+
+	@Override
+	public int getActualPlayerX() {
+		return 0;
+	}
+
+	@Override
+	public int getActualPlayerY() {
+		return 0;
+	}
+
 }
