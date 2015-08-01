@@ -86,8 +86,8 @@ public class DummyState extends BasicGameState {
 				.build();
 
 		MazeBuilder mazeBuilder = new RegularMazeBuilder();
-		return mazeBuilder.setSurface(100, 20).setStart(0, 9)
-				.setGoal(99, 9).setAreaTypeRates(rates).build();
+		return mazeBuilder.setSurface(50, 20).setStart(0, 9)
+				.setGoal(49, 9).setAreaTypeRates(rates).build();
 	}
 
 }
