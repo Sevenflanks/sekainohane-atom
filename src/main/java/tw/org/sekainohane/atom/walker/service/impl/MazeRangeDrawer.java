@@ -41,7 +41,7 @@ public class MazeRangeDrawer implements MazeDrawer {
 	public MazeRangeDrawer(Map<AreaType, Image> areaTypeImgs, Position startPos, int drawRangex, int drawRangeY) {
 		// 算出起始點實際位置(某個位置的圖的中心點)
 		this.actualPlayerX = (startPos.getX() * AREA_WIDTH) + (AREA_WIDTH / 2);
-		this.actualPlayerY = (startPos.getY() * AREA_LENGHT) + (AREA_LENGHT / 2);
+		this.actualPlayerY = ((startPos.getY() + 1) * AREA_LENGHT) + (AREA_LENGHT / 2);
 		this.SCREEN_CENTER_X = SCREEN_WIDTH / 2;
 		this.SCREEN_CENTER_Y = SCREEN_LENGHT /2;
 		this.DRAW_RANGE_X = drawRangex;
@@ -80,8 +80,8 @@ public class MazeRangeDrawer implements MazeDrawer {
 	
 	private AreaType[][] needToView(Maze maze) {
 		AreaType[][] mappedAreas = new AreaType[DRAW_RANGE_X*2+1][DRAW_RANGE_Y*2+1];
-		int playerPosX = actualPlayerX / 500;
-		int playerPosY = maze.getLenght() - 2 - (actualPlayerY / 500);
+		int playerPosX = actualPlayerX / AREA_WIDTH;
+		int playerPosY = maze.getLenght() - ((actualPlayerY + AREA_LENGHT) / AREA_LENGHT);
 		 
 		for (int x = -DRAW_RANGE_X; x <= DRAW_RANGE_X ; x++) {
 			for (int y = -DRAW_RANGE_Y; y <= DRAW_RANGE_Y ; y++) {
@@ -94,8 +94,8 @@ public class MazeRangeDrawer implements MazeDrawer {
 
 	@Override
 	public AreaType getExpectAreaType(Maze maze, int x, int y) {
-		int expectPlayerPosX = x / 500;
-		int expectPlayerPosY = maze.getLenght() - 2 - (y / 500);
+		int expectPlayerPosX = x / AREA_WIDTH;
+		int expectPlayerPosY = maze.getLenght() - ((y + AREA_LENGHT) / AREA_LENGHT);
 		return getAreaType(maze, expectPlayerPosX, expectPlayerPosY);
 	}
 	

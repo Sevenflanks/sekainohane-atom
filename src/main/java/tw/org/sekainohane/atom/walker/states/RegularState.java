@@ -24,6 +24,7 @@ import tw.org.sekainohane.atom.maze.model.Position;
 import tw.org.sekainohane.atom.maze.service.MazeBuilder;
 import tw.org.sekainohane.atom.maze.service.impl.RegularMazeBuilder;
 import tw.org.sekainohane.atom.maze.service.impl.RegularRateBuilder;
+import tw.org.sekainohane.atom.walker.player.Player;
 import tw.org.sekainohane.atom.walker.service.AreaMoveable;
 import tw.org.sekainohane.atom.walker.service.MazeDrawer;
 import tw.org.sekainohane.atom.walker.service.impl.AreaMoveableV1;
@@ -38,6 +39,7 @@ public class RegularState extends BasicGameState implements InputProviderListene
 	private Command walkEast = new BasicCommand("walkEast");
 	private Command godMode = new BasicCommand("godMode");
 	private Command runMode = new BasicCommand("runMode");
+	private Command lastFace = walkSouth;
 	
 	private boolean isWalkingNorth;
 	private boolean isWalkingSouth;
@@ -52,6 +54,7 @@ public class RegularState extends BasicGameState implements InputProviderListene
 	private AreaMoveable areaMoveable;
 	
 	private Maze maze;
+	private Player player = new Player("actor_ika");
 	
 	private boolean isMazeBuilded;
 	
@@ -59,7 +62,10 @@ public class RegularState extends BasicGameState implements InputProviderListene
 	private int actualPlayerY;
 	private int expectPlayerX;
 	private int expectPlayerY;
-	private AreaType expectAreaType;
+	private AreaType expectAreaType1;
+	private AreaType expectAreaType2;
+	private AreaType expectAreaType3;
+	private AreaType expectAreaType4;
 	
 	private String message = "";
 	
@@ -103,17 +109,30 @@ public class RegularState extends BasicGameState implements InputProviderListene
 		} else {
 			graphics.drawString("WaitForLoading", 670, 350);
 		}
-		graphics.drawString(message, 100, 150);
-		graphics.drawString("PlayerX: " + actualPlayerX, 100, 170);
-		graphics.drawString("PlayerY: " + actualPlayerY, 100, 190);
-		graphics.drawString("ShowX: " + (actualPlayerX % 500 - 250), 100, 210);
-		graphics.drawString("ShowY: " + (actualPlayerY % 500 - 250), 100, 230);
-		graphics.drawString("GoX: " + (expectPlayerX % 500 - 250), 100, 250);
-		graphics.drawString("GoY: " + (expectPlayerY % 500 - 250), 100, 270);
-		graphics.drawString("ExpectArea: " + expectAreaType, 100, 290);
 		
-		graphics.setColor(Color.red);
-		graphics.drawOval(640, 350, 10, 10);
+		if (isWalkingNorth) {
+			graphics.drawAnimation(player.moveUp(), 640, 350);
+		} else if (isWalkingSouth) {
+			graphics.drawAnimation(player.moveDown(), 640, 350);
+		} else if (isWalkingWest) {
+			graphics.drawAnimation(player.moveLeft(), 640, 350);
+		} else if (isWalkingEast) {
+			graphics.drawAnimation(player.moveRight(), 640, 350);
+		} else {
+			if (lastFace.equals(walkNorth)) {
+				graphics.drawImage(player.faceUp(), 640, 350);
+			} else if (lastFace.equals(walkSouth)) {
+				graphics.drawImage(player.faceDown(), 640, 350);
+			} else if (lastFace.equals(walkWest)) {
+				graphics.drawImage(player.faceLeft(), 640, 350);
+			} else if (lastFace.equals(walkEast)) {
+				graphics.drawImage(player.faceRight(), 640, 350);
+			}
+		}
+		
+		drawSysMsg(graphics);
+//		graphics.setColor(Color.red);
+//		graphics.drawOval(640, 350, 10, 10);
 	}
 
 	@Override
@@ -128,40 +147,49 @@ public class RegularState extends BasicGameState implements InputProviderListene
 		expectPlayerY = actualPlayerY;
 		if (isRunMode) {
 			if (isWalkingNorth) {
-				expectPlayerY = actualPlayerY - 5;
+				expectPlayerY -= 20;
 			}
 			if (isWalkingSouth) {
-				expectPlayerY = actualPlayerY + 5;
+				expectPlayerY += 20;
 			}
 			if (isWalkingWest) {
-				expectPlayerX = actualPlayerX - 5;
+				expectPlayerX -= 20;
 			}
 			if (isWalkingEast) {
-				expectPlayerX = actualPlayerX + 5;
+				expectPlayerX += 20;
 			}
 		} else {
 			if (isWalkingNorth) {
-				expectPlayerY = actualPlayerY - 1;
+				expectPlayerY -= 5;
 			}
 			if (isWalkingSouth) {
-				expectPlayerY = actualPlayerY + 1;
+				expectPlayerY += 5;
 			}
 			if (isWalkingWest) {
-				expectPlayerX = actualPlayerX - 1;
+				expectPlayerX -= 5;
 			}
 			if (isWalkingEast) {
-				expectPlayerX = actualPlayerX + 1;
+				expectPlayerX += 5;
 			}
 		}
 		
 		if (!isGodMode) {
-			expectAreaType = mazeDrawer.getExpectAreaType(maze, expectPlayerX, actualPlayerY);
-			if (areaMoveable.isPosCanGo(expectAreaType).test(Position.pos(expectPlayerX % 500 - 250, actualPlayerY % 500 - 250))) {
+			expectAreaType1 = mazeDrawer.getExpectAreaType(maze, expectPlayerX, expectPlayerY);
+			expectAreaType2 = mazeDrawer.getExpectAreaType(maze, expectPlayerX + player.getWidth(), expectPlayerY);
+			expectAreaType3 = mazeDrawer.getExpectAreaType(maze, expectPlayerX, expectPlayerY + player.getWidth());
+			expectAreaType4 = mazeDrawer.getExpectAreaType(maze, expectPlayerX + player.getWidth(), expectPlayerY + player.getWidth());
+			
+			if (areaMoveable.isPosCanGo(expectAreaType1).test(Position.pos(Math.abs(expectPlayerX % 500) - 250, Math.abs(actualPlayerY % 500) - 250))
+					&& areaMoveable.isPosCanGo(expectAreaType2).test(Position.pos(Math.abs((expectPlayerX + player.getWidth()) % 500) - 250, Math.abs(actualPlayerY % 500) - 250))
+					&& areaMoveable.isPosCanGo(expectAreaType3).test(Position.pos(Math.abs(expectPlayerX % 500) - 250, Math.abs((actualPlayerY + player.getWidth()) % 500) - 250))
+					&& areaMoveable.isPosCanGo(expectAreaType4).test(Position.pos(Math.abs((expectPlayerX + player.getWidth()) % 500) - 250, Math.abs((actualPlayerY + player.getWidth()) % 500) - 250))) {
 				actualPlayerX = expectPlayerX;
 			}
 			
-			expectAreaType = mazeDrawer.getExpectAreaType(maze, actualPlayerX, expectPlayerY);
-			if (areaMoveable.isPosCanGo(expectAreaType).test(Position.pos(actualPlayerX % 500 - 250, expectPlayerY % 500 - 250))) {
+			if (areaMoveable.isPosCanGo(expectAreaType1).test(Position.pos(Math.abs(actualPlayerX % 500) - 250, Math.abs(expectPlayerY % 500) - 250))
+				&& areaMoveable.isPosCanGo(expectAreaType2).test(Position.pos(Math.abs((actualPlayerX + player.getWidth()) % 500) - 250,Math.abs (expectPlayerY % 500) - 250))
+				&& areaMoveable.isPosCanGo(expectAreaType3).test(Position.pos(Math.abs(actualPlayerX % 500) - 250, Math.abs((expectPlayerY + player.getWidth()) % 500) - 250))
+				&& areaMoveable.isPosCanGo(expectAreaType4).test(Position.pos(Math.abs((actualPlayerX + player.getWidth()) % 500) - 250, Math.abs((expectPlayerY + player.getWidth()) % 500) - 250))) {
 				actualPlayerY = expectPlayerY;
 			}
 		} else {
@@ -224,17 +252,34 @@ public class RegularState extends BasicGameState implements InputProviderListene
 		message = "Released: " + command;
 		if (command.equals(walkNorth)) {
 			isWalkingNorth = false;
+			lastFace = command;
 		} else if (command.equals(walkSouth)) {
 			isWalkingSouth = false;
+			lastFace = command;
 		} else if (command.equals(walkWest)) {
 			isWalkingWest = false;
+			lastFace = command;
 		} else if (command.equals(walkEast)) {
 			isWalkingEast = false;
+			lastFace = command;
 		} else if (command.equals(godMode)) {
 			isGodMode = false;
 		} else if (command.equals(runMode)) {
 			isRunMode = false;
 		}
+	}
+	
+	private void drawSysMsg(Graphics graphics) {
+		graphics.setColor(Color.gray);
+		graphics.drawString(message, 50, 150);
+		graphics.drawString("PlayerX: " + actualPlayerX, 50, 170);
+		graphics.drawString("PlayerY: " + actualPlayerY, 50, 190);
+		graphics.drawString("GoX: " + (Math.abs(expectPlayerX % 500) - 250), 50, 210);
+		graphics.drawString("GoY: " + (Math.abs(expectPlayerY % 500) - 250), 50, 230);
+		graphics.drawString("ExpectArea1: " + expectAreaType1, 50, 250);
+		graphics.drawString("ExpectArea2: " + expectAreaType2, 50, 270);
+		graphics.drawString("ExpectArea3: " + expectAreaType3, 50, 290);
+		graphics.drawString("ExpectArea4: " + expectAreaType4, 50, 310);
 	}
 	
 }

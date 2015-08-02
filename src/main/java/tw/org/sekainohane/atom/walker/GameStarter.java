@@ -23,6 +23,7 @@ public class GameStarter extends StateBasedGame {
 		System.setProperty("org.lwjgl.librarypath", ClassLoader.getSystemResource("natives").getPath());
 		AppGameContainer app = new AppGameContainer(new GameStarter("Hello World"));
         app.setDisplayMode(1280, 700, false);
+        app.setVSync(true);
         app.start();
 	}
 

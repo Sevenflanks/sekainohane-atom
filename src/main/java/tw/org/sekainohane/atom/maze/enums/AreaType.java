@@ -12,7 +12,7 @@ public enum AreaType {
 	ROOM_START("█", true, true, true, true, "images/areas/ROOM_START.png"),
 	ROOM_GOAL("█", true, true, true, true, "images/areas/ROOM_GOAL.png"),
 	ROOM_NORMAL_1("▒", false, false, true, true, "images/areas/ROOM_NORMAL_1.png"), // for ecipse console
-//	ROOM_NORMAL_1("□", false, false, true, true, "images/areas/LOGO.png"), // for win console
+//	ROOM_NORMAL_1("□", false, false, true, true, "images/areas/ROOM_NORMAL_1.png"), // for win console
 	
 	ROAD_H("═", false, false, true, true, "images/areas/ROAD_H.png"),
 	ROAD_V("║", true, true, false, false, "images/areas/ROAD_V.png"),
