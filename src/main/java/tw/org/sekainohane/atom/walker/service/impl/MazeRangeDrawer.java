@@ -27,6 +27,8 @@ public class MazeRangeDrawer implements MazeDrawer {
 	private int actualPlayerX;
 	@Getter
 	private int actualPlayerY;
+	@Getter
+	private AreaType currentAreaType = AreaType.ROOM_START;
 	
 	private int showX;
 	private int showY;
@@ -64,6 +66,8 @@ public class MazeRangeDrawer implements MazeDrawer {
 		int showY = (SCREEN_CENTER_Y - AREA_LENGHT / 2) - (AREA_LENGHT * DRAW_RANGE_Y);
 		AreaType[][] areas = needToView(maze);
 		
+		this.currentAreaType = areas[DRAW_RANGE_X][DRAW_RANGE_Y];
+		
 		for (int x = 0; x < areas.length; x++) {
 			for (int y = areas[x].length - 1; y >= 0; y--) {
 				graphics.drawImage(areaTypeImgs.get(areas[x][y]), showX - this.showX, showY + y * AREA_LENGHT - this.showY);
@@ -71,30 +75,32 @@ public class MazeRangeDrawer implements MazeDrawer {
 			showX += AREA_WIDTH;
 		}
 		
-		
-//		needToView(maze).forEach(a -> {
-//			graphics.drawImage(areaTypeImgs.get(a.getType()), AREA_WIDTH * a.getPos().getX(), AREA_LENGHT * Math.abs(maze.getLenght() - 1 - a.getPos().getY()));
-//		});
 		graphics.flush();
 	}
 	
 	private AreaType[][] needToView(Maze maze) {
 		AreaType[][] mappedAreas = new AreaType[DRAW_RANGE_X*2+1][DRAW_RANGE_Y*2+1];
 		int playerPosX = actualPlayerX / 500;
-		int playerPosY = actualPlayerY / 500;
-//		List<Area> areas = maze.getAreas().parallelStream().filter(a -> {
-//			return a.getPos().getX() >= playerPosX - DRAW_RANGE_X && a.getPos().getX() <= playerPosX + DRAW_RANGE_X
-//					&& a.getPos().getY() >= playerPosY - DRAW_RANGE_Y && a.getPos().getY() <= playerPosY + DRAW_RANGE_Y;
-//		})
-//		.collect(Collectors.toList());
+		int playerPosY = maze.getLenght() - 2 - (actualPlayerY / 500);
 		 
 		for (int x = -DRAW_RANGE_X; x <= DRAW_RANGE_X ; x++) {
 			for (int y = -DRAW_RANGE_Y; y <= DRAW_RANGE_Y ; y++) {
-				mappedAreas[x + DRAW_RANGE_X][y + DRAW_RANGE_Y] = maze.getArea(playerPosX + x, playerPosY + y).orElse(Area.empty(Position.pos(playerPosX + x, playerPosY + y))).getType();
+				mappedAreas[x + DRAW_RANGE_X][(DRAW_RANGE_Y * 2) - (y + DRAW_RANGE_Y)] = getAreaType(maze, x + playerPosX, y + playerPosY);
 			}
 		}
 		 
 		return mappedAreas;
+	}
+
+	@Override
+	public AreaType getExpectAreaType(Maze maze, int x, int y) {
+		int expectPlayerPosX = x / 500;
+		int expectPlayerPosY = maze.getLenght() - 2 - (y / 500);
+		return getAreaType(maze, expectPlayerPosX, expectPlayerPosY);
+	}
+	
+	private AreaType getAreaType(Maze maze, int x, int y) {
+		return maze.getArea(x, y).orElse(Area.empty(Position.pos(x, y))).getType();
 	}
 	
 }

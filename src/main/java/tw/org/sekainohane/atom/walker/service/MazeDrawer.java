@@ -2,6 +2,7 @@ package tw.org.sekainohane.atom.walker.service;
 
 import org.newdawn.slick.Graphics;
 
+import tw.org.sekainohane.atom.maze.enums.AreaType;
 import tw.org.sekainohane.atom.maze.model.Maze;
 
 public interface MazeDrawer {
@@ -13,5 +14,8 @@ public interface MazeDrawer {
 	public int getActualPlayerX();
 	
 	public int getActualPlayerY();
+	
+	public AreaType getCurrentAreaType();
+	public AreaType getExpectAreaType(Maze maze, int x, int y);
 	
 }

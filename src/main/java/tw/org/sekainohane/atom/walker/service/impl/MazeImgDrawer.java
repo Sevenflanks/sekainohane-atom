@@ -48,4 +48,16 @@ public class MazeImgDrawer implements MazeDrawer {
 		return 0;
 	}
 
+	@Override
+	public AreaType getCurrentAreaType() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public AreaType getExpectAreaType(Maze maze, int x, int y) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
