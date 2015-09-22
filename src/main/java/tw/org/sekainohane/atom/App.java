@@ -21,7 +21,7 @@ public class App {
 		
 		System.out.println("====================");
 		System.out.println("Welcome Maze drawer");
-		System.out.println("===================");
+		System.out.println("====================");
 		System.out.println("");
 		System.out.println("　　　　┌───────────────────────────────┐╮");
 		System.out.println("　　　　│　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　││");
