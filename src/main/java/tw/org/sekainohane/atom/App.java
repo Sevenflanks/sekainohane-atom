@@ -19,7 +19,7 @@ public class App {
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in);
 		
-		System.out.println("===================");
+		System.out.println("====================");
 		System.out.println("Welcome Maze drawer");
 		System.out.println("===================");
 		System.out.println("");
