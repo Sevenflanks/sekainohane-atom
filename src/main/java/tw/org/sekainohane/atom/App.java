@@ -43,7 +43,7 @@ public class App {
 		System.out.println("[StartPoint Y]: Number >= 0 & < Length");
 		int startY = waitForKeyInInt(scan);
 		
-		System.out.println("[GoalPoint]: Has a goal?");
+		System.out.println("[GoalPoint]: Has a goal? (y/n)");
 		boolean hasGoal = waitForKeyInYN(scan);
 		int goalX = 0, goalY = 0;
 		if (hasGoal) {
@@ -53,7 +53,7 @@ public class App {
 			goalY = waitForKeyInInt(scan);
 		}
 		
-		System.out.println("[Rate]: Use default rate");
+		System.out.println("[Rate]: Use default rate? (y/n)");
 		boolean useDefaultRate = waitForKeyInYN(scan);
 		
 		Map<AreaType, Integer> rates = null;
@@ -72,10 +72,10 @@ public class App {
 			.setRate(AreaType.ROAD_H, 15)
 			.setRate(AreaType.ROAD_V, 15)
 			
-			.setRate(AreaType.WALL_2, 2)
-			.setRate(AreaType.WALL_4, 2)
-			.setRate(AreaType.WALL_6, 2)
-			.setRate(AreaType.WALL_8, 2)
+			.setRate(AreaType.WALL_2, 1)
+			.setRate(AreaType.WALL_4, 1)
+			.setRate(AreaType.WALL_6, 1)
+			.setRate(AreaType.WALL_8, 1)
 			
 			.setRate(AreaType.WALL_H, 1)
 			.setRate(AreaType.WALL_V, 1)
